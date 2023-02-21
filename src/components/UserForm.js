@@ -18,12 +18,20 @@ function UserForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setUserList([...userList, contact])
-        setContact({ name: "", age: "", email: "", relocated: false })
+        localStorage.setItem('user-list', JSON.stringify([...userList, contact]))
+
+        setContact({ name: "", age: "", email: "", relodcated: false })
     }
+
+    useEffect(() => {
+        const items = JSON.parse(localStorage.getItem('user-list'))
+        setUserList(items)
+    }, [])
 
     const handleDelete = (id) => {
         const filteredArr = userList.filter(item => item.id !== id)
         setUserList(filteredArr)
+        localStorage.setItem('user-list', JSON.stringify(filteredArr))
     }
 
     return (
