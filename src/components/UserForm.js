@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import UserTable from './UserTable';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -6,9 +6,11 @@ function UserForm() {
 
     const [contact, setContact] = useState({ name: "", age: "", email: "", relocated: false });
     const [userList, setUserList] = useState([]);
+    const [isUpdate, setIsUpdate] = useState(false);
+    const [updateId, setUpdateId] = useState(null)
 
     const handleChange = (e) => {
-        setContact({ id: uuidv4(), ...contact, [e.target.name]: e.target.value })
+        setContact({ id: uuidv4(), ...contact, [e.target.name]: e.target.value, isEditing: false })
     }
 
     const handleChangeCheckbox = (e) => {
@@ -24,7 +26,7 @@ function UserForm() {
     }
 
     useEffect(() => {
-        const items = JSON.parse(localStorage.getItem('user-list'))
+        const items = JSON.parse(localStorage.getItem('user-list')) || [];
         setUserList(items)
     }, [])
 
@@ -34,9 +36,27 @@ function UserForm() {
         setUserList(filteredArr)
     }
 
+    const handleEdit = (id) => {
+        const foundItem = userList.find(item => item.id === id)
+        const { name, age, email } = foundItem;
+        setContact({ name, age, email, relodcated: false })
+        setIsUpdate(true)
+        setUpdateId(id)
+    }
+
+    const handleUpdate = () => {
+        const newArr = Array.from(userList);
+        const idx = newArr.findIndex(item => item.id === updateId)
+        newArr.splice(idx, 1, contact)
+
+        setUserList(newArr)
+        localStorage.setItem('user-list', JSON.stringify(newArr))
+    }
+
+
     return (
-        <div className="user-form m-auto mt-5">
-            <form className="bg-light p-5" onSubmit={handleSubmit}>
+        <div className="user-form m-auto mt-5 bg-light p-5">
+            <form className="bg-light p-5" >
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Name</label>
                     <input type="text" className="form-control" id="name" name="name" onChange={handleChange} value={contact.name} />
@@ -53,10 +73,12 @@ function UserForm() {
                     <input type="checkbox" className="form-check-input" id="relocated" onChange={handleChangeCheckbox} name="relocated" value={contact.relocated} />
                     <label className="form-check-label" htmlFor="relocated">Relocated</label>
                 </div>
-
-                <button type="submit" className="btn btn-primary">Submit</button>
             </form>
-            <UserTable userList={userList} handleDelete={handleDelete} />
+            {!isUpdate && <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Submit</button>}
+
+            {isUpdate && <button onClick={handleUpdate} className="btn btn-success">Update</button>}
+            <hr />
+            <UserTable userList={userList} handleDelete={handleDelete} handleEdit={handleEdit} handleUpdate={handleUpdate} />
         </div>
     )
 }

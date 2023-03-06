@@ -1,6 +1,7 @@
 import React from 'react'
 
-function UserTable({ userList, handleDelete }) {
+function UserTable({ userList, handleDelete, handleEdit }) {
+
 
     return (
         <div className='mt-5'>
@@ -19,9 +20,15 @@ function UserTable({ userList, handleDelete }) {
                         <td><strong>{index + 1}</strong></td>
                         <td>{item.name}</td>
                         <td>{item.age}</td>
-                        <td>{item.email}</td>
-                        <td> <button onClick={() => handleDelete(item.id)} className="btn btn-danger m-1">Delete</button> <button className="btn btn-info">Edit</button> </td>
+                        <td>{item.email} </td>
+
+                        <td>
+                            <button onClick={() => handleDelete(item.id)} className="btn btn-danger me-1">Delete</button>
+
+                            <button onClick={() => { handleEdit(item.id); }} className="btn btn-info">Edit</button>
+                        </td>
                     </tr>)}
+
                 </tbody>
             </table>
         </div>
