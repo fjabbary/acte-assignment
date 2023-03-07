@@ -2,3 +2,10 @@ table td {
     vertical-align: middle;
 }
 
+.border-error {
+    border: 1px solid rgb(220, 53, 69);
+}
+
+i.bi {
+    cursor: pointer;
+}

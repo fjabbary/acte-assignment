@@ -1,10 +1,9 @@
 import React from 'react'
 
-function UserTable({ userList, handleDelete, handleEdit }) {
-
+function UserTable({ userList, handleDelete, handleEdit, handleDeleteAll }) {
 
     return (
-        <div className='mt-5'>
+        <div style={{ marginBottom: '160px' }}>
             <table className="table table-striped">
                 <thead>
                     <tr>
@@ -31,6 +30,7 @@ function UserTable({ userList, handleDelete, handleEdit }) {
 
                 </tbody>
             </table>
+            <button className="btn btn-warning" onClick={() => { handleDeleteAll() }}>Delete All Users</button>
         </div>
     )
 }
