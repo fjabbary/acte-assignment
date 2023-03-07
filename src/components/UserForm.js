@@ -108,6 +108,7 @@ function UserForm() {
         setIsUpdate(true)
         setUpdateId(id)
         setShowForm(true)
+        setErrors({ name: "", age: "", email: "" })
     }
 
     const handleUpdate = () => {
@@ -148,10 +149,10 @@ function UserForm() {
 
     return (
         <React.Fragment>
-            <div className="user-form m-auto mt-5 bg-light p-5">
+            <div className="user-form m-auto mt-5 p-5">
                 <h1>Enter new user <i class={showForm ? "bi bi-node-minus-fill" : "bi bi-node-plus-fill"} style={{ float: 'right' }} onClick={handleExpand}></i></h1>
                 {showForm && <div>
-                    <form className="bg-light p-5 text-dark mb-3" >
+                    <form className=" p-5 text-dark mb-3" >
                         <div className="mb-3">
                             <label htmlFor="name" className="form-label">Name</label>
                             <input type="text" className={errorNameClass} id="name" name="name" onChange={handleChange} value={contact.name} />
@@ -172,7 +173,7 @@ function UserForm() {
                             <label className="form-check-label" htmlFor="relocated">Relocated</label>
                         </div>
                     </form>
-                    {!isUpdate && <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Submit</button>}
+                    {!isUpdate && <button type="submit" className="btn btn-dark" onClick={handleSubmit}>Submit</button>}
 
                     {isUpdate && <button onClick={handleUpdate} className="btn btn-success">Update</button>}
                 </div>}

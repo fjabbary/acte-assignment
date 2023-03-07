@@ -9,3 +9,15 @@ table td {
 i.bi {
     cursor: pointer;
 }
+
+.user-form{
+    background-color: cadetblue;
+}
+
+.btn-dark, .btn-success {
+    width: 100%;
+}
+
+.text-danger {
+    font-weight: bold;
+}
